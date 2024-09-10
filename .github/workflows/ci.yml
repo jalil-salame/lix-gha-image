@@ -31,7 +31,7 @@ jobs:
       - name: Build image
         run: |
           nix build --print-build-logs '.#lix-gha-image'
-          docker load "$(realpath result)" 
+          docker load <"$(realpath result)" 
           docker image list
       - name: Push docker image
         run: |
