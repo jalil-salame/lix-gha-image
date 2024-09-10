@@ -35,5 +35,5 @@ jobs:
           docker image list
       - name: Push docker image
         run: |
-          docker image tag "lix-gha-image:latest" "ghcr.io/lix-gha-image:latest"
-          docker push "ghcr.io/lix-gha-image:latest"
+          docker image tag "lix-gha-image:latest" "ghcr.io/jalil-salame/lix-gha-image:latest"
+          docker push "ghcr.io/jalil-salame/lix-gha-image:latest"
