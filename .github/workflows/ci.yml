@@ -12,7 +12,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Run `nix flake check`
-        run: nix flake check --keep-going-verbose
+        run: nix flake check --keep-going --verbose
   buildAndPush:
     needs: check
     runs-on: ubuntu-latest
@@ -25,8 +25,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: 'jalil-salame/lix-gha:latest'
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - name: Run `nix flake check`
+        run: nix run .#lix-gha-image.copyToDockerDaemon
+      - name: Push docker image
+        run: |
+          docker image tag "lix-gha-image:latest" "ghcr.io/lix-gha-image:latest"
+          docker push "ghcr.io/lix-gha-image:latest"
