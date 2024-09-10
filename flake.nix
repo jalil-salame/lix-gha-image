@@ -26,7 +26,11 @@
         lix-gha-image = pkgs.dockerTools.buildImage {
           name = "lix-gha-image";
           tag = "latest";
-          fromImage = "ghcr.io/lix-project/lix";
+          fromImage = pkgs.dockerTools.pullImage {
+            imageName = "ghcr.io/lix-project/lix";
+            imageDigest = "sha256:f98cbd665473fe30e2d8c39269d568a9e7577f18750b87551dbb26ef0f601968";
+            sha256 = "sha256-hQN5VAEFUcv4y3U8Rdhbx1EcZkQuieXlW1CsRDPifs4=";
+          };
           copyToRoot = pkgs.buildEnv {
             name = "image-root";
             paths = with pkgs; [
