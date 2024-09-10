@@ -43,6 +43,11 @@ jobs:
     container:
       image: ghcr.io/jalil-salame/lix-gha-image:latest
     steps:
+      - name: Setup requirements
+        run: |
+          mkdir -p /etc/nix
+          echo extra-experimental-features = nix-command flakes >> /etc/nix/nix.conf
+          nix shell nixpkgs#glib -c ldd /__e/node20/bin/node
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Run `nix flake check`
