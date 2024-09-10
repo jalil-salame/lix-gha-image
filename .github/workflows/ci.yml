@@ -28,13 +28,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: Run `nix flake check`
+      - name: Build image
         run: |
           nix build --print-build-logs '.#lix-gha-image'
-          cp -v "$(realpath result/image.tar.gz)" lix-gha-image.tar.gz
+          docker load "$(realpath result)" 
+          docker image list
       - name: Push docker image
         run: |
-          docker load <lix-gha-image.tar.gz
-          docker image list
           docker image tag "lix-gha-image:latest" "ghcr.io/lix-gha-image:latest"
           docker push "ghcr.io/lix-gha-image:latest"
