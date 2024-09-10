@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir -p /etc/nix
           echo extra-experimental-features = nix-command flakes >> /etc/nix/nix.conf
-          nix shell nixpkgs#glib -c ldd /__e/node20/bin/node
+          nix shell nixpkgs#glibc -c ldd /__e/node20/bin/node
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Run `nix flake check`

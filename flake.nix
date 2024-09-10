@@ -46,12 +46,16 @@
               xz
               # Useful for nix projects
               nix-fast-build
+              nix-ld
             ];
             pathsToLink = [ "/bin" ];
           };
 
           # Add std libs (required for external dynamically linked binaries)
-          config.Env = [ "LD_LIBRARY_PATH=\"${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}\"" ];
+          config.Env = [
+            "NIX_LD=\"${pkgs.nix-ld}\""
+            "NIX_LD_LIBRARY_PATH=\"${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}\""
+          ];
 
           diskSize = 1024;
           buildVMMemorySize = 512;
