@@ -55,6 +55,7 @@
           config.Env = [
             "NIX_LD=\"${pkgs.nix-ld}\""
             "NIX_LD_LIBRARY_PATH=\"${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}\""
+            "LD_LIBRARY_PATH=\"${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}\""
           ];
 
           diskSize = 1024;
