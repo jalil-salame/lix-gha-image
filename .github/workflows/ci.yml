@@ -37,3 +37,13 @@ jobs:
         run: |
           docker image tag "lix-gha-image:latest" "ghcr.io/jalil-salame/lix-gha-image:latest"
           docker push "ghcr.io/jalil-salame/lix-gha-image:latest"
+  testImage:
+    needs: buildAndPush
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jalil-salame/lix-gha-image:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - name: Run `nix flake check`
+        run: nix flake check --keep-going --verbose
